@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+process.env.NODE_ENV = 'development' // LOCALL ONLYYYYYY!!!!!!!!!!!!!!!!!!!
 const { functionName, operatorToken } = require('./__env')
 
 const path = require('path')
@@ -16,6 +16,7 @@ const bodyParser = require('body-parser')
 const server = express()
 const router = express.Router()
 const routes = './routes'
+const expressLayouts = require('express-ejs-layouts')
 
 // enable/disable some E-Com common routes based on configuration
 const { app, procedures } = require('./ecom.config')
@@ -26,6 +27,7 @@ const { ecomServerIps, setup } = require('@ecomplus/application-sdk')
 
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
+server.use(expressLayouts)
 
 server.use((req, res, next) => {
   if (req.url.startsWith('/ecom/')) {
@@ -130,6 +132,7 @@ recursiveReadDir(routesDir).filter(filepath => filepath.endsWith('.js')).forEach
 
 server.use(router)
 server.use(express.static('public'))
+server.set('view engine', 'ejs')
 
 exports[functionName] = functions.https.onRequest(server)
 console.log(`-- Starting '${app.title}' E-Com Plus app with Function '${functionName}'`)

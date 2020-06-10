@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <title>
+    <%= opt.i19Title %> | Offers Notification </title>
+</head>
+<style>
+  <%=css %>.card--offer {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .card--offer .offer__name {
+    font-weight: bold;
+  }
+
+  .card--offer .offer__unavailable_message {}
+
+  .card--offer .offer__unavailable_message {}
+
+  .notification-product {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 280px;
+  }
+
+  .product-body {
+    max-width: 245px;
+    padding: 25px;
+  }
+
+  #notification-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+    line-height: 1.6;
+  }
+
+  #offer_success {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <%- body -%>
+    </div>
+  </div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+  <script>
+    var enabledForm = true
+    var storeId = $('.notification-product').data('store_id')
+    var productId = $('.notification-product').data('product_id')
+    var criterias = $('.notification-product').data('criterias')
+
+    var getStorage = function () {
+      var storage = window.localStorage.getItem('offers_notification')
+      try {
+        storage = JSON.parse(storage)
+      } catch (err) {
+        // ..
+      }
+
+      if (!Array.isArray(storage)) {
+        return []
+      }
+
+      return storage
+    }
+
+    var setStorage = function (data) {
+      const storage = getStorage()
+      storage.push(data)
+      return window.localStorage.setItem('offers_notification', JSON.stringify(storage))
+    }
+
+    var successMsg = function () {
+      $('#offer_success').show()
+    }
+
+    var storage = getStorage()
+    for (var i = 0; i < storage.length; i++) {
+      var product = storage[i]
+      if (product.product_id === productId &&
+        product.storeId === storeId &&
+        product.criterias === criterias) {
+        successMsg()
+        enabledForm = false
+        break
+      }
+    }
+
+    if (enabledForm) {
+      $('#notification-form').show()
+    }
+
+    var errorMsg = function () {
+      $('#offer_error').addClass('d-flex').show()
+      $('#offer_success').hide()
+    }
+
+    var hiddeForm = function () {
+      $('#notification-form').hide()
+    }
+
+    var onSubmit = function (token) {
+      var data = {}
+      var form = $('#notification-form').serializeArray()
+      for (var key in form) {
+        if (form[key]) {
+          const element = form[key]
+          data[element.name] = element.value
+        }
+      }
+
+      fetch('/ecom-offers-notification/us-central1/app/ecom/notification', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Store-Id': storeId,
+          'X-Google-Token': token
+        },
+        body: JSON.stringify(data)
+      })
+        .then(resp => {
+          successMsg()
+          hiddeForm()
+          var session = {
+            product_id: data.product_id,
+            storeId,
+            criterias
+          }
+
+          return setStorage(session)
+        })
+        .catch(err => console.error(err))
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+</body>
+
+</html>

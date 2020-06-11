@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-process.env.NODE_ENV = 'development' // LOCALL ONLYYYYYY!!!!!!!!!!!!!!!!!!!
 const { functionName, operatorToken } = require('./__env')
 
 const path = require('path')
@@ -8,7 +7,9 @@ const recursiveReadDir = require('./lib/recursive-read-dir')
 // Firebase SDKs to setup cloud functions and access Firestore database
 const admin = require('firebase-admin')
 const functions = require('firebase-functions')
-admin.initializeApp()
+
+const fbConfig = {}
+admin.initializeApp(fbConfig)
 
 // web server with Express
 const express = require('express')

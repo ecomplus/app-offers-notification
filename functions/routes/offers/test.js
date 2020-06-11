@@ -3,7 +3,7 @@ exports.get = ({ appSdk }, req, res) => {
   const { storeId } = req
   const { productId } = req.query
   console.log(req.baseUrl)
-  const url = `${req.baseUrl}/offers/notification?store_id=${req.query.store_id}&productId=${productId}`
+  const url = `${req.baseUrl}/app/offers/notification?store_id=${req.query.store_id}&productId=${productId}`
 
   let str = `<a onclick="window.open('${url}&criterias=out_of_stock', '_blank', 'location=yes,height=280,width=580,scrollbars=yes,status=yes');" style="cursor: pointer;">
         Me avise out_of_stock

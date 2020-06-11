@@ -4,9 +4,8 @@ const ecomUtils = require('@ecomplus/utils')
 const axios = require('axios')
 
 exports.get = ({ appSdk }, req, res) => {
-  const { storeId } = req || req.query.store_id
+  const storeId  = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const { productId } = req.query
-
   const opt = {
     storeId,
     i19Title: 'Produto Teste',
@@ -18,7 +17,6 @@ exports.get = ({ appSdk }, req, res) => {
     ecomUtils
   }
 
-
   appSdk.apiRequest(storeId, '/stores/me.json')
     .then(resp => {
       const store = resp.response.data
@@ -27,17 +25,9 @@ exports.get = ({ appSdk }, req, res) => {
     })
     .then(async ({ response, store }) => {
       opt.product = response.data
-
-      if (store.brand_colors) {
-        opt.store = { primary, sencondary } = store.brand_colors
-      }
-
-      const storefrontCss = await axios.get(`${store.homepage}/storefront.css`).then(({ data }) => data)
-
+      opt.css = await axios.get(`${store.homepage}/storefront.css`).then(({ data }) => data)
       opt.store = store
-      const css = storefrontCss
-
-      return res.render('offer-notification', { opt, _, css })
+      return res.render('offer-notification', { opt, _ })
     })
 
     .catch(err => {
@@ -47,7 +37,7 @@ exports.get = ({ appSdk }, req, res) => {
 }
 
 exports.post = ({ appSdk, admin }, req, res) => {
-  const { storeId } = req
+  const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const { body } = req
   const recaptchToken = req.get('x-google-token')
 

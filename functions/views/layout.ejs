@@ -13,7 +13,7 @@
     <%= opt.i19Title %> | Offers Notification </title>
 </head>
 <style>
-  <%=css %>.card--offer {
+  .card--offer {
     color: var(--text-muted);
     font-size: var(--font-size-sm);
   }
@@ -54,7 +54,11 @@
     margin-top: 1rem;
   }
 </style>
-
+<style>
+  <% if (opt.css) { %>
+    <%= opt.css %>
+  <% } %>
+</style>
 <body>
   <div class="container">
     <div class="row">
@@ -107,6 +111,7 @@
     var storage = getStorage()
     for (var i = 0; i < storage.length; i++) {
       var product = storage[i]
+
       if (product.product_id === productId &&
         product.storeId === storeId &&
         product.criterias === criterias) {
@@ -115,7 +120,7 @@
         break
       }
     }
-
+    console.log(storage)
     if (enabledForm) {
       $('#notification-form').show()
     }

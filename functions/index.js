@@ -11,8 +11,8 @@ const functions = require('firebase-functions')
 const fbConfig = {}
 
 admin.initializeApp(fbConfig)
-process.env.RECAPTCHA_KEY = require('firebase-functions').config().recaptcha.secret
-process.env.RECAPTCHA_SECRET = require('firebase-functions').config().recaptcha.key
+process.env.RECAPTCHA_KEY = require('firebase-functions').config().recaptcha.key
+process.env.RECAPTCHA_SECRET = require('firebase-functions').config().recaptcha.secret
 
 // web server with Express
 const express = require('express')

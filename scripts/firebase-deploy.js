@@ -3,7 +3,9 @@ require('dotenv').config()
 const {
   FIREBASE_TOKEN,
   SERVER_OPERATOR_TOKEN,
-  SERVER_BASE_URI
+  SERVER_BASE_URI,
+  RECAPTCHA_KEY,
+  RECAPTCHA_SECRET
 } = process.env
 
 require('./scripts-minification')
@@ -15,7 +17,9 @@ const client = require('firebase-tools')
 const config = [
   `pkg.version=${version}`,
   `pkg.name=${name}`,
-  `server.operator_token=${SERVER_OPERATOR_TOKEN}`
+  `server.operator_token=${SERVER_OPERATOR_TOKEN}`,
+  `recaptcha.secret=${RECAPTCHA_SECRET}`,
+  `recaptcha.key=${RECAPTCHA_KEY}`
 ]
 if (SERVER_BASE_URI) {
   config.push(`server.base_uri=${SERVER_BASE_URI}`)

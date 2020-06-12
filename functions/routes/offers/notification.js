@@ -10,7 +10,7 @@ exports.get = ({ appSdk }, req, res) => {
     storeId,
     i19Title: 'Produto Teste',
     criterias: req.query.criterias || 'out_of_stock',
-    recaptch_key: process.env.RECAPTCHA_SITE_KEY
+    recaptch_key: process.env.RECAPTCHA_KEY
   }
 
   const _ = {

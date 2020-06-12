@@ -10,7 +10,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <title>
-    <%= opt.i19Title %> | Offers Notification </title>
+    <% if (opt.product && opt.product.name) { %>
+      <%= opt.product.name %> |
+    <% } %>
+    Offers Notification </title>
 </head>
 <style>
   .card--offer {
@@ -144,7 +147,7 @@
         }
       }
 
-      fetch('/ecom-offers-notification/us-central1/app/ecom/notification', {
+      fetch('https://us-central1-ecom-offers-notification.cloudfunctions.net/app/offers/notification', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

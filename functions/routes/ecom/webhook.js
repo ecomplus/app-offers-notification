@@ -1,12 +1,15 @@
+/* eslint-disable promise/no-nesting */
 // read configured E-Com Plus app data
 const getAppData = require('./../../lib/store-api/get-app-data')
+const productBackToStoke = require('./../../lib/back-to-stoke')
+const productChangePrice = require('./../../lib/change-price')
 
 const SKIP_TRIGGER_NAME = 'SkipTrigger'
 const ECHO_SUCCESS = 'SUCCESS'
 const ECHO_SKIP = 'SKIP'
 const ECHO_API_ERROR = 'STORE_API_ERR'
 
-exports.post = ({ appSdk }, req, res) => {
+exports.post = ({ appSdk, admin }, req, res) => {
   // receiving notification from Store API
   const { storeId } = req
 
@@ -19,21 +22,27 @@ exports.post = ({ appSdk }, req, res) => {
   // get app configured options
   getAppData({ appSdk, storeId })
 
-    .then(appData => {
-      if (
-        Array.isArray(appData.ignore_triggers) &&
-        appData.ignore_triggers.indexOf(trigger.resource) > -1
-      ) {
-        // ignore current trigger
-        const err = new Error()
-        err.name = SKIP_TRIGGER_NAME
-        throw err
+    .then(async appData => {
+      /* DO YOUR CUSTOM STUFF HERE */
+      const product = await appSdk
+        .apiRequest(storeId, `/products/${trigger.resource_id}.json`).then(({ response }) => response.data)
+
+      // criterio fora de stoque
+      if (trigger.fields &&
+        trigger.fields.includes('quantity') &&
+        product.quantity > 0) {
+        // avisa que o produto chegou
+        productBackToStoke({ appSdk, appData, admin, trigger, storeId })
       }
 
-      /* DO YOUR CUSTOM STUFF HERE */
+      // criterio mudança de preço
+      if (trigger.fields && trigger.fields.includes('price')) {
+        // verifica se o produto teve alteração de preço e avisa os customers
+        productChangePrice({ appSdk, appData, admin, trigger, storeId })
+      }
 
       // all done
-      res.send(ECHO_SUCCESS)
+      return res.send(ECHO_SUCCESS)
     })
 
     .catch(err => {

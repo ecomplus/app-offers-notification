@@ -7,8 +7,8 @@
 
 const app = {
   app_id: 120819,
-  title: 'My Awesome E-Com Plus App',
-  slug: 'my-awesome-app',
+  title: 'Offers Notification',
+  slug: 'offers-notification',
   type: 'external',
   state: 'active',
   authentication: true,
@@ -54,7 +54,7 @@ const app = {
       'POST'           // Create procedures to receive webhooks
     ],
     products: [
-      // 'GET',           // Read products with public and private fields
+      'GET',           // Read products with public and private fields
       // 'POST',          // Create products
       // 'PATCH',         // Edit products
       // 'PUT',           // Overwrite products
@@ -145,31 +145,12 @@ const app = {
 
 const procedures = []
 
-/**
- * Uncomment and edit code above to configure `triggers` and receive respective `webhooks`:
-
 const { baseUri } = require('./__env')
 
 procedures.push({
   title: app.title,
 
   triggers: [
-    // Receive notifications when new order is created:
-    {
-      resource: 'orders',
-      action: 'create',
-    },
-
-    // Receive notifications when order financial/fulfillment status changes:
-    {
-      resource: 'orders',
-      field: 'financial_status',
-    },
-    {
-      resource: 'orders',
-      field: 'fulfillment_status',
-    },
-
     // Receive notifications when products/variations stock quantity changes:
     {
       resource: 'products',
@@ -180,19 +161,6 @@ procedures.push({
       subresource: 'variations',
       field: 'quantity'
     },
-
-    // Receive notifications when cart is edited:
-    {
-      resource: 'carts',
-      action: 'change',
-    },
-
-    // Receive notifications when customer is deleted:
-    {
-      resource: 'customers',
-      action: 'delete',
-    },
-
     // Feel free to create custom combinations with any Store API resource, subresource, action and field.
   ],
 
@@ -207,9 +175,6 @@ procedures.push({
     }
   ]
 })
-
- * You may also edit `routes/ecom/webhook.js` to treat notifications properly.
- */
 
 exports.app = app
 

@@ -13,6 +13,8 @@ const fbConfig = {}
 admin.initializeApp(fbConfig)
 process.env.RECAPTCHA_KEY = require('firebase-functions').config().recaptcha.key
 process.env.RECAPTCHA_SECRET = require('firebase-functions').config().recaptcha.secret
+process.env.AWS_ACCESS_KEY_ID = require('firebase-functions').config().aws.access_key
+process.env.AWS_SECRET_ACCESS_KEY = require('firebase-functions').config().aws.secret_access
 
 // web server with Express
 const express = require('express')
@@ -21,6 +23,7 @@ const server = express()
 const router = express.Router()
 const routes = './routes'
 const expressLayouts = require('express-ejs-layouts')
+const cors = require('cors')
 
 // enable/disable some E-Com common routes based on configuration
 const { app, procedures } = require('./ecom.config')
@@ -32,6 +35,7 @@ const { ecomServerIps, setup } = require('@ecomplus/application-sdk')
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(bodyParser.json())
 server.use(expressLayouts)
+server.use(cors())
 
 server.use((req, res, next) => {
   if (req.url.startsWith('/ecom/')) {

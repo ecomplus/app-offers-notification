@@ -5,7 +5,9 @@ const {
   SERVER_OPERATOR_TOKEN,
   SERVER_BASE_URI,
   RECAPTCHA_KEY,
-  RECAPTCHA_SECRET
+  RECAPTCHA_SECRET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY
 } = process.env
 
 require('./scripts-minification')
@@ -19,7 +21,9 @@ const config = [
   `pkg.name=${name}`,
   `server.operator_token=${SERVER_OPERATOR_TOKEN}`,
   `recaptcha.secret=${RECAPTCHA_SECRET}`,
-  `recaptcha.key=${RECAPTCHA_KEY}`
+  `recaptcha.key=${RECAPTCHA_KEY}`,
+  `aws.access_key=${AWS_ACCESS_KEY_ID}`
+  `aws.secret_access=${AWS_SECRET_ACCESS_KEY}`
 ]
 if (SERVER_BASE_URI) {
   config.push(`server.base_uri=${SERVER_BASE_URI}`)

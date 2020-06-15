@@ -15,7 +15,7 @@ module.exports = (store, from, to, subject, html) => {
 
     const options = {
       from: {
-        name: store,
+        name: store.name,
         address: 'noreply@e-com.club'
       },
       to,

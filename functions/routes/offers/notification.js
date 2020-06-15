@@ -2,13 +2,14 @@
 const { randomObjectId } = require('@ecomplus/utils')
 const ecomUtils = require('@ecomplus/utils')
 const axios = require('axios')
+// read configured E-Com Plus app data
+const getAppData = require('./../../lib/store-api/get-app-data')
 
 exports.get = ({ appSdk }, req, res) => {
-  const storeId  = parseInt(req.query.store_id || req.get('x-store-id'), 10)
+  const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const { productId } = req.query
   const opt = {
     storeId,
-    i19Title: 'Produto Teste',
     criterias: req.query.criterias || 'out_of_stock',
     recaptch_key: process.env.RECAPTCHA_KEY
   }
@@ -17,15 +18,25 @@ exports.get = ({ appSdk }, req, res) => {
     ecomUtils
   }
 
-  appSdk.apiRequest(storeId, '/stores/me.json')
-    .then(resp => {
-      const store = resp.response.data
+  getAppData({ appSdk, storeId })
+
+    .then(appData => {
       return appSdk
-        .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => ({ response, store }))
+        .apiRequest(storeId, '/stores/me.json').then(({ response }) => ({ store: response.data, appData }))
     })
-    .then(async ({ response, store }) => {
+
+    .then(({ store, appData }) => {
+      return appSdk
+        .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => ({ response, store, appData }))
+    })
+
+    .then(async ({ response, store, appData }) => {
       opt.product = response.data
-      opt.css = await axios.get(`${store.homepage}/storefront.css`).then(({ data }) => data)
+      if (appData.store_stylesheet) {
+        opt.css = appData.store_stylesheet
+      } else {
+        opt.css = await axios.get(`${store.homepage}/storefront.css`).then(({ data }) => data)
+      }
       opt.store = store
       return res.render('offer-notification', { opt, _ })
     })
@@ -39,16 +50,8 @@ exports.get = ({ appSdk }, req, res) => {
 exports.post = ({ appSdk, admin }, req, res) => {
   const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const { body } = req
-  const recaptchToken = req.get('x-google-token')
 
-  if (!recaptchToken) {
-    return res.status(400).send({
-      status: 400,
-      message: 'google token not setted at header'
-    })
-  }
-
-  if (!body || body['g-recaptcha-response'] !== recaptchToken) {
+  if (!body || !body['g-recaptcha-response']) {
     return res.status(403).send({
       status: 403,
       message: 'body not found or g-recaptcha-response not setted at body or not match with x-google-token'
@@ -59,7 +62,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const collection = db.collection('offer_notifications')
   return axios({
     method: 'post',
-    url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${recaptchToken}`,
+    url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${body['g-recaptcha-response']}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

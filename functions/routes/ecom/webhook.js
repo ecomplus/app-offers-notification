@@ -1,7 +1,7 @@
 /* eslint-disable promise/no-nesting */
 // read configured E-Com Plus app data
 const getAppData = require('./../../lib/store-api/get-app-data')
-const productBackToStoke = require('./../../lib/back-to-stoke')
+const productBackToStock = require('../../lib/back-to-stock')
 const productChangePrice = require('./../../lib/change-price')
 
 const SKIP_TRIGGER_NAME = 'SkipTrigger'
@@ -32,7 +32,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
         trigger.fields.includes('quantity') &&
         product.quantity > 0) {
         // avisa que o produto chegou
-        productBackToStoke({ appSdk, appData, admin, trigger, storeId })
+        productBackToStock({ appSdk, appData, admin, trigger, storeId })
       }
 
       // criterio mudança de preço

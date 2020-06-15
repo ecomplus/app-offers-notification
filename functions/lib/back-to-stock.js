@@ -4,15 +4,14 @@ const awsEmail = require('./aws-emails')
 module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
   const db = admin.firestore()
   const collection = db.collection('offer_notifications')
-
   const productId = trigger.resource_id
 
-  return collection
+  collection
     .where('store_id', '==', storeId)
     .where('product_id', '==', productId)
     .where('customer_criterias', '==', 'out_of_stock')
     .where('notified', '==', false)
-
+    .get()
     .then(async querySnapshot => {
       if (querySnapshot.empty) {
         const err = new Error('No e-mails for this specific product')
@@ -24,7 +23,7 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
         .apiRequest(storeId, '/stores/me.json').then(({ response }) => response.data)
 
       const product = await appSdk
-        .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => ({ response, store, appData }))
+        .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => response.data)
 
       const promises = []
       const html = 'Hellow'
@@ -44,5 +43,10 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
       return
     })
 
-    .catch(err => console.error('BACKTOSTOKE_ERR', err))
+    .catch(err => {
+      const { code } = err
+      if (code !== 'NOEMAILS') {
+        console.error(err)
+      }
+    })
 }

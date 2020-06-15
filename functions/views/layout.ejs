@@ -158,17 +158,23 @@
         body: JSON.stringify(data)
       })
         .then(resp => {
-          successMsg()
-          hiddeForm()
-          var session = {
-            product_id: data.product_id,
-            storeId,
-            criterias
+          if (resp.status === 201) {
+            successMsg()
+            hiddeForm()
+            var session = {
+              product_id: data.product_id,
+              storeId,
+              criterias
+            }
+    
+            setStorage(session)
+          } else if (resp.status >= 400) {
+            throw resp
           }
-
-          return setStorage(session)
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          console.error('Error', err)
+        })
     }
   </script>
   <script src="https://www.google.com/recaptcha/api.js"></script>

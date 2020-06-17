@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const { functionName, operatorToken } = require('./__env')
-
+process.env.GOOGLE_APPLICATION_CREDENTIALS='/home/talisson/serviceAccountKeyEON.json'
+process.env.NODE_ENV = 'development'
 const path = require('path')
 const recursiveReadDir = require('./lib/recursive-read-dir')
 

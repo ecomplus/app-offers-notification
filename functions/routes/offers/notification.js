@@ -32,11 +32,14 @@ exports.get = ({ appSdk }, req, res) => {
 
     .then(async ({ response, store, appData }) => {
       opt.product = response.data
+      let cssUrl
       if (appData.store_stylesheet) {
-        opt.css = appData.store_stylesheet
+        cssUrl = appData.store_stylesheet
       } else {
-        opt.css = await axios.get(`${store.homepage}/storefront.css`).then(({ data }) => data)
+        cssUrl = `${store.homepage}/storefront.css`
       }
+
+      opt.css = await axios.get(cssUrl).then(({ data }) => data)
       opt.store = store
       return res.render('offer-notification', { opt, _ })
     })

@@ -135,6 +135,42 @@ const app = {
      * You can also set any other valid resource/subresource combination.
      * Ref.: https://developers.e-com.plus/docs/api/#/store/
      */
+  },
+
+  admin_settings: {
+    main_email: {
+      schema: {
+        type: 'string',
+        maxLength: 255,
+        title: 'E-mail para envio das listas'
+      },
+      hide: false
+    },
+    store_stylesheet: {
+      schema: {
+        type: 'string',
+        maxLength: 255,
+        title: 'Css da loja',
+        description: 'Se informada a url com a folha de estilo da loja, o widget irá incorporar o estilo da loja.'
+      },
+      hide: false
+    },
+    custom_message_out_of_stock: {
+      schema: {
+        type: 'string',
+        title: 'Mensagem Customizada | Me Avise',
+        default: 'Ser avisado quando o produto retornar ao estoque'
+      },
+      hide: false
+    },
+    custom_message_price_change: {
+      schema: {
+        type: 'string',
+        title: 'Mensagem Customizada | Acompanhar preço',
+        default: 'Ser avisado quando o produto abaixar o preço'
+      },
+      hide: false
+    }
   }
 }
 

@@ -133,16 +133,16 @@
     var hiddeForm = function () {
       $('#notification-form').hide()
     }
-    console.log( $("#notification-form input.required"))
+
+    console.log($(".form-control"))
     var onSubmit = function (token) {
       var data = {}
       let valid = true
-      console.log($("input.required"))
-      $("#notification-form input.required").each(function (index, value) {
-        console.log(this)
-        if (!$(value).val()) {
-          console.log(this)
-          $(value).focus()
+      
+      $(".form-control").each(function (index, input) {
+        if (!$(input).val() && input.required && valid) {
+          $(input).focus()
+          valid = false
         }
       })
 

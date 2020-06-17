@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.0 (2020-06-17)
+
+
+### Features
+
+* **back-to-stock:** sends emails when product returns to stock ([9aea1f0](https://github.com/ecomplus/application-starter/commit/9aea1f022a4a6c19b54dffcb4d869a605f3091d5))
+* **routes:** notification resource and view ([e01babe](https://github.com/ecomplus/application-starter/commit/e01babee62a9bc54e99f4f5239ecd7b2d3d9a756))
+* **views:** view for notification resource ([fb64820](https://github.com/ecomplus/application-starter/commit/fb64820361c46f4b55881380d04e306f7d0dd591))
+* **webhook:** handling triggers from ecom ([61bf785](https://github.com/ecomplus/application-starter/commit/61bf785ac854967323155e4841eb95c4a8465993))
+* **webhook:** handling triggers from ecom ([c1e3a11](https://github.com/ecomplus/application-starter/commit/c1e3a116547b00a0aaa7e53eeddaa1a3d873b68a))
+
+
+### Bug Fixes
+
+* **aws-emails:** store name ([d2560b4](https://github.com/ecomplus/application-starter/commit/d2560b4f328a350f1965821c785593333e17eba3))
+* **deps:** update @ecomplus/application-sdk to v1.13.0 ([6266a01](https://github.com/ecomplus/application-starter/commit/6266a018b2d84aaf3a0a888b96ee7925648566f8))
+* **deps:** update pkg dependencies ([ed9e4ae](https://github.com/ecomplus/application-starter/commit/ed9e4aee0ab67ef7a6e4315ddf4779293d2c013e))
+* **firebase-deploy:** comma in object ([61b6caa](https://github.com/ecomplus/application-starter/commit/61b6caa534e850f66a7be3044de2349effdb2701))
+* **index:** removed mock NODE_ENV ([99fbad0](https://github.com/ecomplus/application-starter/commit/99fbad0ef71715c1baf8eb3428907e0c90aed508))
+* **layout.ejs:** url for post in notification ([86e0bfc](https://github.com/ecomplus/application-starter/commit/86e0bfc909ed3a2a7b435a0280754c123ad0daab))
+* **notification:** fallback for css ([20a244c](https://github.com/ecomplus/application-starter/commit/20a244c96b412ec4b3c86b86aa55c48ecf8fe38a))
+* **notification:** response status 403 when missing fields in body ([f8a19c7](https://github.com/ecomplus/application-starter/commit/f8a19c7f3cd4a14cfd52c3efcd0369c0ccd4c55c))
+* **refresh-tokens:** force appSdk update tokens service ([f85a6cc](https://github.com/ecomplus/application-starter/commit/f85a6cc2a47904645c03dc068e4e6bb11c201cdd))
+* env name ([4bdb9fa](https://github.com/ecomplus/application-starter/commit/4bdb9faf6add1ae2769a941e485948a1c925983a))
+* get css from opt object ([bbd3b5c](https://github.com/ecomplus/application-starter/commit/bbd3b5c2f88091ab09f64a934db22890d14e9e4f))
+* input required ([5cbdb87](https://github.com/ecomplus/application-starter/commit/5cbdb8757715ed4e7376d87d20a591060481df8e))
+* input required ([25740f8](https://github.com/ecomplus/application-starter/commit/25740f80a2a53ba51f3c4f94742ace3f6ddbeb75))
+* preventing errors with .then undefined ([7aad3c1](https://github.com/ecomplus/application-starter/commit/7aad3c1bb34e9778d8201cdde1f36af9838da103))
+* save offer only with status 201 ([1834c94](https://github.com/ecomplus/application-starter/commit/1834c94e007e3ca37f007cad082cef403055e121))
+* using env from firebase config ([8938a44](https://github.com/ecomplus/application-starter/commit/8938a4400d52bbc88d2a7b9f45a70b4386e2199d))
+
 ## [1.0.0-starter.12](https://github.com/ecomplus/application-starter/compare/v1.0.0-starter.11...v1.0.0-starter.12) (2020-05-29)
 
 

@@ -54,10 +54,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const { body } = req
 
-  if (!body || !body['g-recaptcha-response']) {
+  if (!body || !body['g-recaptcha-response'] || !body['customer_name'] || !body['customer_email']) {
     return res.status(403).send({
       status: 403,
-      message: 'body not found or g-recaptcha-response not setted at body or not match with x-google-token'
+      message: 'Missing required fields'
     })
   }
 

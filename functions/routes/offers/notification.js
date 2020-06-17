@@ -109,13 +109,13 @@ exports.post = ({ appSdk, admin }, req, res) => {
               .apiRequest(storeId, `/products/${body.product_id}.json`).then(({ response }) => response.data)
             doc.product_price = ecomProduct.price
           } catch (error) {
-            console.log()
+            console.error(error)
           }
         }
 
         return collection
           .doc(ecomUtils.randomObjectId())
-          .set(doc).then(r => console.log(r))
+          .set(doc)
       }
       return querySnapshot
     })
@@ -127,7 +127,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
 
     .catch(err => {
-      console.log(err)
+      console.error(err)
       res.status(500).send(err)
     })
 }

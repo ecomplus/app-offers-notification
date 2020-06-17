@@ -1,7 +1,7 @@
 {
   "app_id": 120819,
-  "title": "My Awesome E-Com Plus App",
-  "slug": "ecomplus-app-offers-notification",
+  "title": "Offers Notification",
+  "slug": "offers-notification",
   "type": "external",
   "state": "active",
   "authentication": true,
@@ -13,7 +13,9 @@
     "procedures": [
       "POST"
     ],
-    "products": [],
+    "products": [
+      "GET"
+    ],
     "brands": [],
     "categories": [],
     "customers": [],

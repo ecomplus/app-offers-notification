@@ -3,7 +3,7 @@
 
 <div class="notification-product" data-product_id="<%= opt.product._id %>" data-store_id="<%= opt.storeId %>"
   data-criterias="<%= opt.criterias %>">
-  <div class="product-body">
+  <div class="product-body" style="display: none;">
     <picture>
       <source srcset="<%= _.ecomUtils.img(opt.product).url %>" type="image/webp" media="(max-width: 399.98px)">
       <source srcset="<%= imgObj.url %>" type="image/webp" media="(min-width: 400px)">
@@ -45,11 +45,6 @@
   </form>
 
   <div class="alert alert-primary" role="alert" id="offer_success" style="display: none;">
-    Pronto! Você notificado quando o produto <%= opt.product.name %>
-    <% if (opt.criterias === 'out_of_stock') { %>
-    voltar ao estoque.
-    <% } else{ %>
-    abaixar o preço.
-    <% } %>
+    Pronto, você será notificado!
   </div>
 </div>

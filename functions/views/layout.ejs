@@ -114,7 +114,8 @@
 
       if (product.product_id === productId &&
         product.storeId === storeId &&
-        product.criterias === criterias) {
+        product.criterias === criterias &&
+        enabledForm) {
         successMsg()
         enabledForm = false
         break
@@ -123,6 +124,7 @@
 
     if (enabledForm) {
       $('#notification-form').show()
+      $('.product-body').show()
     }
 
     var errorMsg = function () {
@@ -134,7 +136,10 @@
       $('#notification-form').hide()
     }
 
-    console.log($(".form-control"))
+    var hidePicture = function () {
+      $('.product-body').hide()
+    }
+
     var onSubmit = function (token) {
       var data = {}
       let valid = true
@@ -172,6 +177,10 @@
           if (resp.status === 201) {
             successMsg()
             hiddeForm()
+            hidePicture()
+            setTimeout(function() {
+              window.close()
+            }, 5000)
             var session = {
               product_id: data.product_id,
               storeId,

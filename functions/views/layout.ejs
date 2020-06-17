@@ -11,7 +11,7 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <title>
     <% if (opt.product && opt.product.name) { %>
-      <%= opt.product.name %> |
+    <%= opt.product.name %> |
     <% } %>
     Offers Notification </title>
 </head>
@@ -24,10 +24,6 @@
   .card--offer .offer__name {
     font-weight: bold;
   }
-
-  .card--offer .offer__unavailable_message {}
-
-  .card--offer .offer__unavailable_message {}
 
   .notification-product {
     display: flex;
@@ -63,6 +59,7 @@
     <%= opt.css %>
   <% } %>
 </style>
+
 <body>
   <div class="container">
     <div class="row">
@@ -80,7 +77,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-
   <script>
     var enabledForm = true
     var storeId = $('.notification-product').data('store_id')
@@ -124,7 +120,7 @@
         break
       }
     }
-    console.log(storage)
+
     if (enabledForm) {
       $('#notification-form').show()
     }
@@ -137,9 +133,23 @@
     var hiddeForm = function () {
       $('#notification-form').hide()
     }
-
+    console.log( $("#notification-form input.required"))
     var onSubmit = function (token) {
       var data = {}
+      let valid = true
+      console.log($("input.required"))
+      $("#notification-form input.required").each(function (index, value) {
+        console.log(this)
+        if (!$(value).val()) {
+          console.log(this)
+          $(value).focus()
+        }
+      })
+
+      if (!valid) {
+        return
+      }
+
       var form = $('#notification-form').serializeArray()
       for (var key in form) {
         if (form[key]) {
@@ -167,7 +177,7 @@
               storeId,
               criterias
             }
-    
+
             setStorage(session)
           } else if (resp.status >= 400) {
             throw resp

@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "Offers Notification",
-    "short_description": "",
+    "title": "Avise-me",
+    "short_description": "Notifique seus clientes quando um produto voltar ao estoque ou reduzir seu preço",
     "category": "tools"
   }
 }

@@ -1,3 +1,3 @@
-# My Awesome E-Com Plus App
+# Avise-me
 
-Somethings about my app and what it does...
+Notifique seus clientes quando um produto voltar ao estoque ou reduzir seu preço

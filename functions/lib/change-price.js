@@ -26,11 +26,13 @@ module.exports = async ({ appSdk, appData, admin, trigger, storeId }) => {
         .apiRequest(storeId, '/stores/me.json').then(({ response }) => response.data)
 
       const promises = []
-      const html = 'Hellow'
+      const html = `Produto ${product.name} teve seu preço alterado!`
+      + `Confira no <a href="${store.homepage}/${product.slug}"> link </a>`
+      + `${store.name}`
 
       querySnapshot.forEach(doc => {
         if (doc.data().product_price > product.price) {
-          const promise = awsEmail(store, appData.main_email, doc.data().customer_email, 'Produto Alterou o preço', html)
+          const promise = awsEmail(store, appData.main_email, doc.data().customer_email, 'Preço alterado', html)
             .then(() => collection.doc(doc.id).update({ notified: true }))
           promises.push(promise)
         }

@@ -26,7 +26,9 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
         .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => response.data)
 
       const promises = []
-      const html = 'Hellow'
+      const html = `Produto ${product.name} de volta ao estoque!`
+      + `Confira em <a href="${store.homepage}/${product.slug}"> link </a>`
+      + `${store.name}`
 
       querySnapshot.forEach(doc => {
         console.log(doc.id, " => ", doc.data())

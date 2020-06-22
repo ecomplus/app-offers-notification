@@ -26,9 +26,9 @@ module.exports = async ({ appSdk, appData, admin, trigger, storeId }) => {
         .apiRequest(storeId, '/stores/me.json').then(({ response }) => response.data)
 
       const promises = []
-      const html = `Produto ${product.name} teve seu preço alterado!`
-      + `Confira no <a href="${store.homepage}/${product.slug}"> link </a>`
-      + `${store.name}`
+      const html = `Produto ${product.name} teve seu preço alterado! <br>`
+      + `Confira no <a href="${store.homepage}/${product.slug}"> link </a> <br>`
+      + `${store.name} <br>`
 
       querySnapshot.forEach(doc => {
         if (doc.data().product_price > product.price) {

@@ -1,6 +1,6 @@
 /* eslint-disable promise/no-nesting */
 const awsEmail = require('./aws-emails')
-
+const tm = require('@ecomplus/transactional-mails')
 module.exports = async ({ appSdk, appData, admin, trigger, storeId }) => {
   const db = admin.firestore()
   const collection = db.collection('offer_notifications')
@@ -26,15 +26,20 @@ module.exports = async ({ appSdk, appData, admin, trigger, storeId }) => {
         .apiRequest(storeId, '/stores/me.json').then(({ response }) => response.data)
 
       const promises = []
-      const html = `Produto ${product.name} teve seu preço alterado! <br>`
-      + `Confira no <a href="${store.homepage}/${product.slug}"> link </a> <br>`
-      + `${store.name} <br>`
-
-      querySnapshot.forEach(doc => {
-        if (doc.data().product_price > product.price) {
-          const promise = awsEmail(store, appData.main_email, doc.data().customer_email, 'Preço alterado', html)
-            .then(() => collection.doc(doc.id).update({ notified: true }))
-          promises.push(promise)
+      querySnapshot.forEach(async doc => {
+        if (doc.data().customer_email !== '') {
+          if (doc.data().product_price > product.price) {
+            const customer = {
+              main_email: doc.data().customer_email,
+              name: {
+                given_name: doc.data().customer_name
+              }
+            }
+            const html = await tm.promo(store, customer, product, 'pt_br')
+            const promise = awsEmail(store, appData.main_email, doc.data().customer_email, 'Produto em promoção', html)
+              .then(() => collection.doc(doc.id).update({ notified: true }))
+            promises.push(promise)
+          }
         }
       })
 

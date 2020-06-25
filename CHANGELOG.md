@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ecomplus/application-starter/compare/v1.0.0...v1.1.0) (2020-06-25)
+
+
+### Features
+
+* using @ecomplus/transactional-mails ([bfea80a](https://github.com/ecomplus/application-starter/commit/bfea80aacd477fef3273087f00d3d5afa4b8e92c))
+
+
+### Bug Fixes
+
+* error message ([3c81142](https://github.com/ecomplus/application-starter/commit/3c811420be433c741b16ffa9452812c47ef08d1e))
+
 ## 1.0.0 (2020-06-17)
 
 

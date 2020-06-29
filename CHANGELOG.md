@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.1.2) (2020-06-29)
+
+
+### Bug Fixes
+
+* avoiding duplicating emails ([b959ebc](https://github.com/ecomplus/application-starter/commit/b959ebcd36a94e7d0c753fdf676b96360f8c75b9))
+* **webhooks:** avoiding duplicating emails ([956277a](https://github.com/ecomplus/application-starter/commit/956277aa21d813a0debb8d4ecba4a3b4cb7b1775))
+
 ### [1.1.1](https://github.com/ecomplus/application-starter/compare/v1.1.0...v1.1.1) (2020-06-25)
 
 

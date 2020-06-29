@@ -9,8 +9,6 @@ const ECHO_SUCCESS = 'SUCCESS'
 const ECHO_SKIP = 'SKIP'
 const ECHO_API_ERROR = 'STORE_API_ERR'
 
-let processQueue = [] // preventing duplicated notification
-
 exports.post = ({ appSdk, admin }, req, res) => {
   // receiving notification from Store API
   const { storeId } = req
@@ -21,55 +19,47 @@ exports.post = ({ appSdk, admin }, req, res) => {
    */
   const trigger = req.body
 
-  if (processQueue.indexOf(trigger.resource_id) !== -1) {
-    return
-  }
+  // get app configured options
+  getAppData({ appSdk, storeId })
 
-  processQueue.push(trigger.resource_id)
+    .then(async appData => {
+      /* DO YOUR CUSTOM STUFF HERE */
+      const product = await appSdk
+        .apiRequest(storeId, `/products/${trigger.resource_id}.json`).then(({ response }) => response.data)
 
-  setTimeout(async () => {
-    // get app configured options
-    getAppData({ appSdk, storeId })
-
-      .then(async appData => {
-        /* DO YOUR CUSTOM STUFF HERE */
-        const product = await appSdk
-          .apiRequest(storeId, `/products/${trigger.resource_id}.json`).then(({ response }) => response.data)
-
+      setTimeout(async () => {
         // criterio fora de stoque
         if (trigger.fields &&
           trigger.fields.includes('quantity') &&
           product.quantity > 0) {
           // avisa que o produto chegou
-          productBackToStock({ appSdk, appData, admin, trigger, storeId })
+          await productBackToStock({ appSdk, appData, admin, trigger, storeId })
         }
 
         // criterio mudança de preço
         if (trigger.fields && trigger.fields.includes('price')) {
           // verifica se o produto teve alteração de preço e avisa os customers
-          productChangePrice({ appSdk, appData, admin, trigger, storeId })
+          await productChangePrice({ appSdk, appData, admin, trigger, storeId })
         }
+      }, 5000)
+      // all done
+      return res.send(ECHO_SUCCESS)
+    })
 
-        // all done
-        return res.send(ECHO_SUCCESS)
-      })
-
-      .catch(err => {
-        if (err.name === SKIP_TRIGGER_NAME) {
-          // trigger ignored by app configuration
-          res.send(ECHO_SKIP)
-        } else {
-          // console.error(err)
-          // request to Store API with error response
-          // return error status code
-          res.status(500)
-          const { message } = err
-          res.send({
-            error: ECHO_API_ERROR,
-            message
-          })
-        }
-      })
-    processQueue.splice(processQueue.indexOf(trigger.resource_id), 1)
-  }, Math.random() * (5000 - 1000) + 1000)
+    .catch(err => {
+      if (err.name === SKIP_TRIGGER_NAME) {
+        // trigger ignored by app configuration
+        res.send(ECHO_SKIP)
+      } else {
+        // console.error(err)
+        // request to Store API with error response
+        // return error status code
+        res.status(500)
+        const { message } = err
+        res.send({
+          error: ECHO_API_ERROR,
+          message
+        })
+      }
+    })
 }

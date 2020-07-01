@@ -7,7 +7,7 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
   const collection = db.collection('offer_notifications')
   const productId = trigger.resource_id
 
-  collection
+  return collection
     .where('store_id', '==', storeId)
     .where('product_id', '==', productId)
     .where('customer_criterias', '==', 'out_of_stock')

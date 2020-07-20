@@ -190,12 +190,13 @@ procedures.push({
     // Receive notifications when products/variations stock quantity changes:
     {
       resource: 'products',
+      subresource: null,
       field: 'quantity',
     },
     {
       resource: 'products',
-      subresource: 'variations',
-      field: 'quantity'
+      subresource: null,
+      field: 'price',
     },
     // Feel free to create custom combinations with any Store API resource, subresource, action and field.
   ],

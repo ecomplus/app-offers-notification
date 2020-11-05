@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/ecomplus/application-starter/compare/v1.1.2...v1.1.3) (2020-11-05)
+
+
+### Bug Fixes
+
+* **auth-callback:** check `row.setted_up` in place of 'settep_up' ([7db5168](https://github.com/ecomplus/application-starter/commit/7db5168a8186ffdd677d030c59c5cdecc0ffe197))
+* **ecom-config:** fix procedure triggers ([bbe9774](https://github.com/ecomplus/application-starter/commit/bbe9774af37cda4b8a881f2b063606f5cabcba0a))
+* **refresh-tokens:** add scheduled cloud function to run update ([8adb5d6](https://github.com/ecomplus/application-starter/commit/8adb5d61436c7bfdf79c463f8794aaf0c65aa6b6))
+
 ### [1.1.2](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.1.2) (2020-06-29)
 
 

@@ -1,10 +1,14 @@
+# App offers notification
+
+[![Deploy](https://github.com/ecomplus/app-offers-notification/workflows/Deploy/badge.svg)](https://github.com/ecomplus/app-offers-notification/actions?workflow=Deploy)  [![Deploy](https://github.com/ecomplus/app-offers-notification/workflows/Publish/badge.svg)](https://github.com/ecomplus/app-offers-notification/actions?workflow=Publish) [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+E-Com Plus app for products notifications to subscribers
+
+[CHANGELOG](https://github.com/ecomplus/app-offers-notification/blob/master/CHANGELOG.md)
+
 # E-Com Plus Application Starter
 
-[![Deploy](https://github.com/ecomplus/application-starter/workflows/Deploy/badge.svg)](https://github.com/ecomplus/application-starter/actions?workflow=Deploy) [![Call refresh tokens](https://github.com/ecomplus/application-starter/workflows/Call%20refresh%20tokens/badge.svg)](https://github.com/ecomplus/application-starter/actions?workflow=Call+refresh+tokens) [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 :dog: Boilerplate for E-Com Plus apps with [Firebase](https://firebase.google.com/) Cloud Functions and GitHub Actions.
-
-[CHANGELOG](https://github.com/ecomplus/application-starter/blob/master/CHANGELOG.md)
 
 ## Getting started
 

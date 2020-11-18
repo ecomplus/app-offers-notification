@@ -5,7 +5,7 @@ exports.get = async ({ appSdk, admin }, req, res) => {
 
   const querySnapshot = await admin.firestore()
     .collection('offer_notifications')
-    .where('storeId', '==', storeId)
+    .where('store_id', '==', storeId)
     .get()
 
   const notifications = querySnapshot.docs.map(doc => {

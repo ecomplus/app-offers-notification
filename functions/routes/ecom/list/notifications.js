@@ -1,4 +1,4 @@
-import { parseAsync } from 'json2csv'
+const { parseAsync } = require('json2csv')
 
 exports.get = async ({ appSdk, admin }, req, res) => {
   const { storeId } = req

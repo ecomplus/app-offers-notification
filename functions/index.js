@@ -52,7 +52,7 @@ server.use((req, res, next) => {
 
     if (process.env.NODE_ENV !== 'development') {
       // check for operator token
-      if (operatorToken !== req.get('x-operator-token')) {
+      if (operatorToken !== (req.get('x-operator-token') || req.query.operator_token)) {
         // last check for IP address from E-Com Plus servers
         const clientIp = req.get('x-forwarded-for') || req.connection.remoteAddress
         if (ecomServerIps.indexOf(clientIp) === -1) {

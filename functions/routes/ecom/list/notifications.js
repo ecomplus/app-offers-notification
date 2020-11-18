@@ -8,13 +8,7 @@ exports.get = async ({ appSdk, admin }, req, res) => {
     .where('store_id', '==', storeId)
     .get()
 
-  const notifications = querySnapshot.docs.map(doc => {
-    const data = doc.data()
-    return {
-      ...data,
-      created_at: data.toDate().toISOString()
-    }
-  })
+  const notifications = querySnapshot.docs.map(doc => doc.data())
 
   const csv = await parseAsync(notifications)
   const datetime = new Date().toISOString().replace(/\W/g, '')

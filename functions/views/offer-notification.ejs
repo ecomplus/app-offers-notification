@@ -1,50 +1,33 @@
 <%- contentFor('body') %>
-<% const imgObj = _.ecomUtils.img(opt.product, null, 'big') %>
 
-<div class="notification-product" data-product_id="<%= opt.product._id %>" data-store_id="<%= opt.storeId %>"
-  data-criterias="<%= opt.criterias %>">
-  <div class="product-body" style="display: none;">
-    <picture>
-      <source srcset="<%= _.ecomUtils.img(opt.product).url %>" type="image/webp" media="(max-width: 399.98px)">
-      <source srcset="<%= imgObj.url %>" type="image/webp" media="(min-width: 400px)">
-      <img src="<%= imgObj.url.replace(/\.webp$/, '') %>" alt="<%= imgObj.alt %>" class="img-fluid">
-    </picture>
-  </div>
-
-  <form id="notification-form" class="card--offer" style="display: none;">
-    <span class="offer__name"><%= opt.product.name %></span>
-    <span class="offer__sku">COD: <%= opt.product.sku %> </span>
-
-    <% if (opt.criterias === 'out_of_stock') { %>
-    <span class="offer__unavailable_message">Temporariamente indisponível</span>
-    <span class="offer__notify_message">Avise-me quando esse produto chegar</span>
-    <% } else{ %>
-    <span class="offer__notify_message">Avise-me quando esse produto abaixar seu preço</span>
-    <% } %>
-
-    <div class="form-row">
-      <div class="col-auto mt-2">
-        <label class="sr-only" for="input-name">Nome</label>
-        <input type="text" class="form-control" id="input-name" name="customer_name" placeholder="Seu nome" required="true">
-      </div>
-      <div class="col-auto mt-2">
-        <label class="sr-only" for="input-email">E-mail</label>
-        <div class="input-group mb-2">
-          <input type="email" class="form-control" id="input-email" name="customer_email"
-            placeholder="e-mail@e-mail.com" required="true">
+  <div id="notification-product" class="notification-product" data-product_id="<%= opt.product._id %>" data-store_id="<%= opt.storeId %>"
+    data-criterias="<%= opt.criterias %>">
+    <form id="notification-form" class="card--offer" style="display: none;" id="submit" type="submit">
+      <div class="form-row">
+        <div class="col-sm-12 mt-2">
+          <label class="sr-only" for="input-name">Nome</label>
+          <input type="text" class="form-control" id="input-name" name="customer_name" placeholder="Seu nome"
+            required="true">
+        </div>
+        <div class="col-sm-12 mt-3">
+          <label class="sr-only" for="input-email">E-mail</label>
+          <div class="input-group mb-2">
+            <input type="email" class="form-control" id="input-email" name="customer_email"
+              placeholder="e-mail@e-mail.com" required="true">
+          </div>
+        </div>
+        <div class="col-sm-12 mt-2">
+          <button id="offers-submit" class="btn btn-success btn-block">Me avise</button>
         </div>
       </div>
-      <div class="col-sm-12">
-        <button type="submit" class="btn btn-success btn-block mb-2 g-recaptcha" data-sitekey="<%= opt.recaptch_key %>"
-          data-callback="onSubmit" data-action="submit">Me
-          avise</button>
-      </div>
-    </div>
-    <input type="hidden" name="customer_criterias" value="<%= opt.criterias %>">
-    <input type="hidden" name="product_id" value="<%= opt.product._id %>">
-  </form>
-
-  <div class="alert alert-primary" role="alert" id="offer_success" style="display: none;">
-    Pronto, você será notificado!
+      <input type="hidden" class="form-control" name="customer_criterias" value="<%= opt.criterias %>">
+      <input type="hidden" class="form-control" name="product_id" value="<%= opt.product._id %>">
+    </form>
   </div>
-</div>
+  <span style="display: none" id="offer_success">
+    <div class="alert" role="alert">
+      Pronto, você será notificado!
+    </div>
+  </span>
+  <div id="recaptcha" class="g-recaptcha" data-sitekey="<%= opt.recaptch_key %>" data-callback="onSubmit"
+    data-size="invisible"></div>

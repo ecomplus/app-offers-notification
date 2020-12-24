@@ -52,9 +52,10 @@ exports.get = ({ appSdk }, req, res) => {
 
 exports.post = ({ appSdk, admin }, req, res) => {
   const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
+  const token = req.get('x-google-token')
   const { body } = req
 
-  if (!body || !body['g-recaptcha-response'] || !body['customer_name'] || !body['customer_email']) {
+  if (!body || !token || !body['customer_name'] || !body['customer_email']) {
     return res.status(403).send({
       status: 403,
       message: 'Missing required fields'
@@ -65,7 +66,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const collection = db.collection('offer_notifications')
   return axios({
     method: 'post',
-    url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${body['g-recaptcha-response']}`,
+    url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${token}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

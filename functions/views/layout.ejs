@@ -147,6 +147,8 @@
         return enableBtn()
       }
       
+      data.token = token
+
       fetch('https://us-central1-ecom-offers-notification.cloudfunctions.net/app/offers/notification', {
         method: 'POST',
         headers: {

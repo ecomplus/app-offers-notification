@@ -53,7 +53,8 @@ exports.get = ({ appSdk }, req, res) => {
 exports.post = ({ appSdk, admin }, req, res) => {
   const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
   const token = req.get('X-Google-Token') || req.headers['X-Google-Token']
-  console.log('token', token)
+  console.log('token', req.headers)
+  console.log('token', req.body)
   const { body } = req
 
   if (!token) {

@@ -26,9 +26,6 @@
   }
 
   .notification-product {
-    display: flex;
-    align-content: center;
-    justify-content: center;
     width: 100%;
   }
 
@@ -37,21 +34,14 @@
     padding: 16px 10px;
   }
 
-  #notification-form {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    padding: 10px;
-    line-height: 1.8;
+  #offer_success {
+    width: 100%;
+    display: grid;
+    place-content: center;
+    gap: 1ch;
+    min-height: 165px;
   }
 
-  #offer_success {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-    margin-top: 1rem;
-  }
 </style>
 <style>
   <% if (opt.css) { %>
@@ -59,28 +49,15 @@
   <% } %>
 </style>
 
-<body>
-  <div class="container">
-    <div class="row">
-      <%- body -%>
-    </div>
-  </div>
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
+<body style="overflow: hidden;">
+  <%- body -%>
+
   <script>
     var enabledForm = true
-    var storeId = $('.notification-product').data('store_id')
-    var productId = $('.notification-product').data('product_id')
-    var criterias = $('.notification-product').data('criterias')
+    var $notificationProduct = document.getElementById('notification-product')
+    var storeId = $notificationProduct.dataset.store_id
+    var productId = $notificationProduct.dataset.product_id
+    var criterias = $notificationProduct.dataset.criterias
 
     var getStorage = function () {
       var storage = window.localStorage.getItem('offers_notification')
@@ -104,7 +81,15 @@
     }
 
     var successMsg = function () {
-      $('#offer_success').show()
+      document.getElementById('offer_success').style.display = 'grid'
+    }
+
+    var disableBtn = function () {
+      document.getElementById('offers-submit').disabled = false
+    }
+
+    var enableBtn = function () {
+      document.getElementById('offers-submit').disabled = true
     }
 
     var storage = getStorage()
@@ -122,46 +107,46 @@
     }
 
     if (enabledForm) {
-      $('#notification-form').show()
-      $('.product-body').show()
+      document.getElementById('notification-form').style.display = 'block'
     }
 
     var errorMsg = function () {
-      $('#offer_error').addClass('d-flex').show()
-      $('#offer_success').hide()
+      document.getElementById('offer_error').style.display = 'd-flex'
+      document.getElementById('offer_success').style.display = 'none'
     }
 
     var hiddeForm = function () {
-      $('#notification-form').hide()
+      document.getElementById('notification-form').style.display = 'none'
     }
 
-    var hidePicture = function () {
-      $('.product-body').hide()
+    var validateEmail = function (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
     }
 
     var onSubmit = function (token) {
+      disableBtn()
       var data = {}
       let valid = true
-      
-      $(".form-control").each(function (index, input) {
-        if (!$(input).val() && input.required && valid) {
-          $(input).focus()
+      var $formControl = document.querySelectorAll('.form-control')
+      $formControl.forEach(function($el, i) {
+        if (!$el.value && $el.required && valid) {
           valid = false
+          $el.focus()
+        } else {
+          data[$el.name] = $el.value
         }
       })
 
       if (!valid) {
-        return
+        return enableBtn()
       }
 
-      var form = $('#notification-form').serializeArray()
-      for (var key in form) {
-        if (form[key]) {
-          const element = form[key]
-          data[element.name] = element.value
-        }
+      if (!data.customer_email || !validateEmail(data.customer_email)) {
+        document.getElementById('input-email').focus()
+        return enableBtn()
       }
-
+      
       fetch('https://us-central1-ecom-offers-notification.cloudfunctions.net/app/offers/notification', {
         method: 'POST',
         headers: {
@@ -176,10 +161,6 @@
           if (resp.status === 201) {
             successMsg()
             hiddeForm()
-            hidePicture()
-            setTimeout(function() {
-              window.close()
-            }, 4000)
             var session = {
               product_id: data.product_id,
               storeId,
@@ -187,16 +168,27 @@
             }
 
             setStorage(session)
+            enableBtn()
           } else if (resp.status >= 400) {
             throw resp
           }
         })
         .catch(err => {
+          enableBtn()
           console.error('Error', err)
         })
     }
   </script>
-  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback" async defer></script>
+  <script>
+    var sitekey = '<%= opt.recaptch_key %>'
+    var onloadCallback = function() {
+      grecaptcha.render('offers-submit', {
+        'sitekey' : sitekey,
+        'callback' : onSubmit
+      });
+    };
+  </script>
 </body>
 
 </html>

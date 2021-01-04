@@ -55,10 +55,27 @@ exports.post = ({ appSdk, admin }, req, res) => {
   const token = req.get('x-google-token')
   const { body } = req
 
-  if (!body || !token || !body['customer_name'] || !body['customer_email']) {
-    return res.status(403).send({
-      status: 403,
-      message: 'Missing required fields'
+  if (!token) {
+    return res.status(400).send({
+      status: 400,
+      message: 'X-Google-Token not found'
+    })
+  }
+
+  const fields = ['product_id', 'customer_email', 'customer_name', 'customer_criterias']
+  let isValid = true
+  let fieldName = ''
+  fields.forEach(field => {
+    if (!body[field]) {
+      fieldName = field
+      isValid = false
+    }
+  })
+
+  if (!isValid) {
+    return res.status(400).send({
+      status: 400,
+      message: 'Missing required prop ' + fieldName
     })
   }
 

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ecomplus/application-starter/compare/v1.1.3...v1.2.0) (2021-05-10)
+
+
+### Features
+
+* **auth:** accept operator token on url param ([e579b07](https://github.com/ecomplus/application-starter/commit/e579b07cc6efcb19f962cafe61341a2a967391c2))
+* **list-notifications:** endpoint to export registered notifications list (csv) ([8d50acc](https://github.com/ecomplus/application-starter/commit/8d50acc8167294919fcb5c2d886972f0053887e4))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.14.10 ([2544c71](https://github.com/ecomplus/application-starter/commit/2544c71bd061459345eadde89adb67d87d6f4eb1))
+* check required fields ([0eff00c](https://github.com/ecomplus/application-starter/commit/0eff00c15845f11f705b03152091e71508eb2a45))
+* **list-notifications:** filter by 'store_id' in place of 'storeId' ([5e3d513](https://github.com/ecomplus/application-starter/commit/5e3d513a27519d9803ec69250aca69a88f241697))
+* **list-notifications:** stop parsing 'created_at' field ([8839cb9](https://github.com/ecomplus/application-starter/commit/8839cb9546db84a35441d190771361acc925895b))
+* **list-notifications:** syntax fix (commonjs) ([afac688](https://github.com/ecomplus/application-starter/commit/afac6882ef26025f6e87a3e1aea7952b367a0a84))
+* **list-notificatons:** try parsing firestore timestamp to iso date ([9c6c842](https://github.com/ecomplus/application-starter/commit/9c6c842b9e9767b9715005d8a84e1de2ee5eff43))
+
 ### [1.1.3](https://github.com/ecomplus/application-starter/compare/v1.1.2...v1.1.3) (2020-11-05)
 
 

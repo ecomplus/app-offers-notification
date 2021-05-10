@@ -146,15 +146,6 @@ const app = {
       },
       hide: false
     },
-    store_stylesheet: {
-      schema: {
-        type: 'string',
-        maxLength: 255,
-        title: 'Css da loja',
-        description: 'Se informada a url com a folha de estilo da loja, o widget irá incorporar o estilo da loja.'
-      },
-      hide: false
-    },
     custom_message_out_of_stock: {
       schema: {
         type: 'string',

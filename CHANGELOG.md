@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/ecomplus/application-starter/compare/v1.2.0...v1.2.1) (2021-05-10)
+
+
+### Bug Fixes
+
+* **notification-view:** properly requesting store public data (store id on endpoint) ([927fc80](https://github.com/ecomplus/application-starter/commit/927fc80642d0fddfa1685bfa8ff62f2c13a9b47a))
+
 ## [1.2.0](https://github.com/ecomplus/application-starter/compare/v1.1.3...v1.2.0) (2021-05-10)
 
 

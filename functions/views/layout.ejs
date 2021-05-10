@@ -2,38 +2,38 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <% if (opt.stylesheet) { %>
+    <link rel="stylesheet" href="<%= opt.stylesheet %>">
+  <% } %>
+
   <title>
     <% if (opt.product && opt.product.name) { %>
-    <%= opt.product.name %> |
+      <%= opt.product.name %> |
     <% } %>
-    Offers Notification </title>
+    Offers Notification
+  </title>
 </head>
+
 <style>
   .card--offer {
     color: var(--text-muted);
     font-size: var(--font-size-sm);
   }
-
   .card--offer .offer__name {
     font-weight: bold;
   }
-
   .notification-product {
     width: 100%;
   }
-
   .product-body {
     max-width: 245px;
     padding: 16px 10px;
   }
-
   #offer_success {
     width: 100%;
     display: grid;
@@ -41,13 +41,13 @@
     gap: 1ch;
     min-height: 165px;
   }
+</style>
 
-</style>
-<style>
-  <% if (opt.css) { %>
+<% if (opt.css) { %>
+  <style>
     <%= opt.css %>
-  <% } %>
-</style>
+  </style>
+<% } %>
 
 <body style="overflow: hidden;">
   <%- body -%>
@@ -146,7 +146,7 @@
         document.getElementById('input-email').focus()
         return enableBtn()
       }
-      
+
       data.token = token
 
       fetch('https://us-central1-ecom-offers-notification.cloudfunctions.net/app/offers/notification', {
@@ -183,7 +183,7 @@
   </script>
   <script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback" async defer></script>
   <script>
-    var sitekey = '<%= opt.recaptch_key %>'
+    var sitekey = '<%= opt.recaptchKey %>'
     var onloadCallback = function() {
       grecaptcha.render('offers-submit', {
         'sitekey' : sitekey,

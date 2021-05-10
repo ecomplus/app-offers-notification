@@ -1,47 +1,49 @@
-/* eslint-disable promise/no-nesting */
-const { randomObjectId } = require('@ecomplus/utils')
 const ecomUtils = require('@ecomplus/utils')
+const { store } = require('@ecomplus/client')
 const axios = require('axios')
-// read configured E-Com Plus app data
-const getAppData = require('./../../lib/store-api/get-app-data')
 
 exports.get = ({ appSdk }, req, res) => {
-  const storeId = parseInt(req.query.store_id || req.get('x-store-id'), 10)
-  const { productId } = req.query
+  const storeId = parseInt(req.query.store_id || req.query.storeId, 10)
+  const { productId, stylesheet } = req.query
   const opt = {
     storeId,
     criterias: req.query.criterias || 'out_of_stock',
-    recaptch_key: process.env.RECAPTCHA_KEY
+    recaptchKey: process.env.RECAPTCHA_KEY
   }
 
-  const _ = {
-    ecomUtils
-  }
+  new Promise(resolve => {
+    if (stylesheet) {
+      resolve(stylesheet)
+    } else {
+      store({
+        url: '/stores/me',
+        storeId
+      }).then(({ data }) => {
+        resolve(`${data.homepage}/storefront.css`)
+      }).catch(() => {
+        resolve(null)
+      })
+    }
+  })
 
-  getAppData({ appSdk, storeId })
-
-    .then(appData => {
-      return appSdk
-        .apiRequest(storeId, '/stores/me.json').then(({ response }) => ({ store: response.data, appData }))
+    .then(stylesheet => {
+      return store({
+        url: `/products/${productId}.json`,
+        storeId
+      }).then(({ data }) => {
+        return {
+          product: data,
+          stylesheet
+        }
+      })
     })
 
-    .then(({ store, appData }) => {
-      return appSdk
-        .apiRequest(storeId, `/products/${productId}.json`).then(({ response }) => ({ response, store, appData }))
-    })
-
-    .then(async ({ response, store, appData }) => {
-      opt.product = response.data
-      let cssUrl
-      if (appData.store_stylesheet) {
-        cssUrl = appData.store_stylesheet
-      } else {
-        cssUrl = `${store.homepage}/storefront.css`
-      }
-
-      opt.css = await axios.get(cssUrl).then(({ data }) => data)
-      opt.store = store
-      return res.render('offer-notification', { opt, _ })
+    .then(async payload => {
+      Object.assign(opt, payload)
+      return res.render('offer-notification', {
+        opt,
+        _: { ecomUtils }
+      })
     })
 
     .catch(err => {
@@ -142,7 +144,6 @@ exports.post = ({ appSdk, admin }, req, res) => {
       // response success
       return res.status(201).end()
     })
-
 
     .catch(err => {
       console.error(err)

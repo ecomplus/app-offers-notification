@@ -16,7 +16,7 @@ exports.get = ({ appSdk }, req, res) => {
       resolve(stylesheet)
     } else {
       store({
-        url: '/stores/me',
+        url: `/stores/${storeId}`,
         storeId
       }).then(({ data }) => {
         resolve(`${data.homepage}/storefront.css`)

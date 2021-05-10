@@ -13,16 +13,17 @@
     "node": "12"
   },
   "dependencies": {
-    "@ecomplus/application-sdk": "^21.0.0-firestore.1.13.0",
+    "@ecomplus/application-sdk": "^22.0.0-firestore.1.14.10",
     "@ecomplus/transactional-mails": "^1.10.3",
     "@ecomplus/utils": "^1.4.1",
+    "@google-cloud/firestore": "^4.11.0",
     "aws-sdk": "^2.904.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
-    "firebase-admin": "^8.13.0",
+    "firebase-admin": "^9.7.0",
     "firebase-functions": "^3.13.2",
     "json2csv": "^5.0.6",
     "nodemailer": "^6.6.0"

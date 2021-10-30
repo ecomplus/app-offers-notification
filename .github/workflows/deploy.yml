@@ -8,7 +8,6 @@ on:
       - 'functions/**'
       - 'scripts/_constants.js'
       - 'scripts/firebase-deploy.js'
-      - '.github/workflows/deploy.yml'
       - '*.json'
 
 jobs:
@@ -26,10 +25,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -49,10 +48,6 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           SERVER_OPERATOR_TOKEN: ${{ secrets.SERVER_OPERATOR_TOKEN }}
-          RECAPTCHA_SECRET: ${{ secrets.RECAPTCHA_SECRET }}
-          RECAPTCHA_KEY:  ${{ secrets.RECAPTCHA_KEY }}
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         run: npm run deploy
 
   update-app-json:
@@ -75,6 +70,7 @@ jobs:
         env:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
+          sleep 20
           wget -O ./assets/application.json \
             https://us-central1-$FIREBASE_PROJECT_ID.cloudfunctions.net/app/
 
@@ -108,14 +104,14 @@ jobs:
 
       - name: Setup Node
         if: steps.pkg_version.outputs.publish == 1
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Cache dependencies
         if: steps.pkg_version.outputs.publish == 1
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -132,3 +128,4 @@ jobs:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           MARKET_TOKEN: ${{ secrets.MARKET_TOKEN }}
         run: "npm run publish:market"
+        continue-on-error: true

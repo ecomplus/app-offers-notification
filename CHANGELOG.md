@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ecomplus/application-starter/compare/v1.2.2...v1.3.0) (2021-11-08)
+
+
+### Features
+
+* **variation-id:** handle stock notifications by variation id [[#12](https://github.com/ecomplus/application-starter/issues/12)] ([55309e7](https://github.com/ecomplus/application-starter/commit/55309e7418b3b4c2a3ce649daa3ec53b5a3282bf))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/application-sdk to v1.15.5 firestore ([f49f0d0](https://github.com/ecomplus/application-starter/commit/f49f0d067e7d12334113f04ea6594b6bf4e8f6e2))
+* **deps:** update @ecomplus/application-sdk to v1.15.6 firestore ([d6852ae](https://github.com/ecomplus/application-starter/commit/d6852aed6e37838e1d94ebf7dec7a6f2f10196b4))
+* **deps:** update all non-major ([f84d6b9](https://github.com/ecomplus/application-starter/commit/f84d6b988f66b8bd6e2a345a9b04608380547e16))
+* **deps:** update all non-major dependencies ([#44](https://github.com/ecomplus/application-starter/issues/44)) ([7500916](https://github.com/ecomplus/application-starter/commit/7500916e95c5200a77f7d5ddbf8db49a06192d4f))
+* **deps:** update dependency @ecomplus/application-sdk to ^22.0.0-firestore.1.15.6 ([2b20394](https://github.com/ecomplus/application-starter/commit/2b203947f827404b1bd9340be8040ea7a9948549))
+* **deps:** update dependency dotenv to v10 ([#39](https://github.com/ecomplus/application-starter/issues/39)) ([264276d](https://github.com/ecomplus/application-starter/commit/264276da940edc912b1088178c86fcd4c9d10837))
+* **deps:** update dependency firebase-admin to v10 ([#58](https://github.com/ecomplus/application-starter/issues/58)) ([4ab8a44](https://github.com/ecomplus/application-starter/commit/4ab8a44d4e22837564eea5217d985d6781dcd1d4))
+
 ### [1.2.2](https://github.com/ecomplus/application-starter/compare/v1.2.1...v1.2.2) (2021-05-12)
 
 

@@ -1,4 +1,3 @@
-/* eslint-disable promise/no-nesting */
 const awsEmail = require('./aws-emails')
 const tm = require('@ecomplus/transactional-mails')
 
@@ -28,15 +27,24 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
 
       const promises = []
       querySnapshot.forEach(async doc => {
-        if (doc.data().customer_email !== '') {
+        const data = doc.data()
+        if (data.customer_email !== '') {
+          if (data.variation_id) {
+            const variation = product.variations
+              ? product.variations.find(({ _id }) => _id === data.variation_id)
+              : null
+            if (!variation || !variation.quantity) {
+              return
+            }
+          }
           const customer = {
-            main_email: doc.data().customer_email,
+            main_email: data.customer_email,
             name: {
-              given_name: doc.data().customer_name
+              given_name: data.customer_name
             }
           }
           const html = await tm.stock(store, customer, product, 'pt_br').catch(e => console.log(e))
-          const promise = awsEmail(store, appData.main_email, doc.data().customer_email, 'Produto em estoque', html)
+          const promise = awsEmail(store, appData.main_email, data.customer_email, 'Produto em estoque', html)
             .then(() => collection.doc(doc.id).update({ notified: true }))
           promises.push(promise)
         }
@@ -47,7 +55,6 @@ module.exports = ({ appSdk, appData, admin, trigger, storeId }) => {
 
     .then(result => {
       console.log(result)
-      return
     })
 
     .catch(err => {

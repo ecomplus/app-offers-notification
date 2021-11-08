@@ -4,9 +4,11 @@ const axios = require('axios')
 
 exports.get = ({ appSdk }, req, res) => {
   const storeId = parseInt(req.query.store_id || req.query.storeId, 10)
-  const { productId, stylesheet } = req.query
+  const { productId, variationId, stylesheet } = req.query
   const opt = {
     storeId,
+    productId,
+    variationId,
     criterias: req.query.criterias || 'out_of_stock',
     recaptchKey: process.env.RECAPTCHA_KEY
   }
@@ -31,6 +33,12 @@ exports.get = ({ appSdk }, req, res) => {
         url: `/products/${productId}.json`,
         storeId
       }).then(({ data }) => {
+        if (
+          variationId &&
+          (!data.variations || !data.variations.find(({ _id }) => _id === variationId))
+        ) {
+          throw new Error('Variation not found')
+        }
         return {
           product: data,
           stylesheet
@@ -81,8 +89,10 @@ exports.post = ({ appSdk, admin }, req, res) => {
     })
   }
 
-  const db = admin.firestore()
-  const collection = db.collection('offer_notifications')
+  const collection = admin
+    .firestore()
+    .collection('offer_notifications')
+
   return axios({
     method: 'post',
     url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${token}`,
@@ -105,6 +115,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
       return collection
         .where('store_id', '==', storeId)
         .where('product_id', '==', body.product_id)
+        .where('variation_id', '==', body.variation_id)
         .where('customer_email', '==', body.customer_email)
         .where('customer_criterias', '==', body.customer_criterias)
         .get()
@@ -116,6 +127,7 @@ exports.post = ({ appSdk, admin }, req, res) => {
           created_at: admin.firestore.Timestamp.fromDate(new Date()),
           store_id: storeId,
           product_id: body.product_id,
+          variation_id: body.variation_id,
           customer_email: body.customer_email,
           customer_name: body.customer_name,
           customer_criterias: body.customer_criterias,

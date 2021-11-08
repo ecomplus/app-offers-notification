@@ -1,6 +1,6 @@
 <%- contentFor('body') %>
 
-  <div id="notification-product" class="notification-product" data-product_id="<%= opt.product._id %>" data-store_id="<%= opt.storeId %>"
+  <div id="notification-product" class="notification-product" data-product_id="<%= opt.productId %>" data-store_id="<%= opt.storeId %>"
     data-criterias="<%= opt.criterias %>">
     <form id="notification-form" class="card--offer" style="display: none;" id="submit" type="submit">
       <div class="form-row">
@@ -21,7 +21,8 @@
         </div>
       </div>
       <input type="hidden" class="form-control" name="customer_criterias" value="<%= opt.criterias %>">
-      <input type="hidden" class="form-control" name="product_id" value="<%= opt.product._id %>">
+      <input type="hidden" class="form-control" name="product_id" value="<%= opt.productId %>">
+      <input type="hidden" class="form-control" name="variation_id" value="<%= opt.variationId %>">
     </form>
   </div>
   <span style="display: none" id="offer_success">

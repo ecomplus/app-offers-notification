@@ -13,6 +13,10 @@ exports.get = ({ appSdk }, req, res) => {
     recaptchKey: process.env.RECAPTCHA_KEY
   }
 
+  if (!productId) {
+    return res.status(400).send('`productId` is required')
+  }
+
   new Promise(resolve => {
     if (stylesheet) {
       resolve(stylesheet)

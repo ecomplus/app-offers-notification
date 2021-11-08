@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/ecomplus/application-starter/compare/v1.3.0...v1.3.1) (2021-11-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to ^2.1019.0 ([2aee55f](https://github.com/ecomplus/application-starter/commit/2aee55f523ca8afb405a3d6f121c2ea4a994ee91))
+
 ## [1.3.0](https://github.com/ecomplus/application-starter/compare/v1.2.2...v1.3.0) (2021-11-08)
 
 

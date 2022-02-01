@@ -17,7 +17,7 @@
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/transactional-mails": "^1.10.9",
     "@ecomplus/utils": "^1.4.1",
-    "@google-cloud/firestore": "^4.15.1",
+    "@google-cloud/firestore": "^5.0.2",
     "aws-sdk": "^2.1066.0",
     "axios": "^0.25.0",
     "cors": "^2.8.5",

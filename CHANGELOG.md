@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/ecomplus/application-starter/compare/v1.3.1...v1.3.2) (2023-08-29)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major ([3842994](https://github.com/ecomplus/application-starter/commit/3842994bbbd26aa4ce50d76320d51aa190280db8))
+* **deps:** update all non-major ([60813fa](https://github.com/ecomplus/application-starter/commit/60813fa69368606f021f800524cc525476f4fcce))
+* **deps:** update all non-major ([abcfe5e](https://github.com/ecomplus/application-starter/commit/abcfe5e346793c647dc30b531653e6d95ff07cca))
+* **deps:** update all non-major ([9060668](https://github.com/ecomplus/application-starter/commit/9060668d20e804a9c1c5601f2d004dd82916c3bf))
+* **deps:** update all non-major ([b6cff6e](https://github.com/ecomplus/application-starter/commit/b6cff6ee92d76ec978b6cd009b8212d5bcd259e4))
+* update `@ecomplus/transactional-mails` to v1.11.7 ([d2688a9](https://github.com/ecomplus/application-starter/commit/d2688a925a3af484131a1a3ad8360721566c394d))
+
 ### [1.3.1](https://github.com/ecomplus/application-starter/compare/v1.3.0...v1.3.1) (2021-11-08)
 
 

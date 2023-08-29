@@ -24,21 +24,25 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
     .then(async appData => {
       /* DO YOUR CUSTOM STUFF HERE */
-      setTimeout(async () => {
-        // criterio fora de stoque
-        if (trigger.fields &&
-          trigger.fields.includes('quantity') &&
-          trigger.body && trigger.body.quantity > 0) {
+      // criterio fora de stoque
+      if (
+        trigger.fields &&
+        trigger.fields.includes('quantity') &&
+        trigger.body &&
+        trigger.body.quantity > 0
+      ) {
+        setTimeout(async () => {
           // avisa que o produto chegou
           await productBackToStock({ appSdk, appData, admin, trigger, storeId })
-        }
-
-        // criterio mudança de preço
-        if (trigger.fields && trigger.fields.includes('price')) {
+        }, 1000)
+      }
+      // criterio mudança de preço
+      if (trigger.fields && trigger.fields.includes('price')) {
+        setTimeout(async () => {
           // verifica se o produto teve alteração de preço e avisa os customers
           await productChangePrice({ appSdk, appData, admin, trigger, storeId })
-        }
-      }, 5000)
+        }, 1000)
+      }
       // all done
       return res.send(ECHO_SUCCESS)
     })

@@ -24,14 +24,11 @@ exports.post = ({ appSdk, admin }, req, res) => {
 
     .then(async appData => {
       /* DO YOUR CUSTOM STUFF HERE */
-      const product = await appSdk
-        .apiRequest(storeId, `/products/${trigger.resource_id}.json`).then(({ response }) => response.data)
-
       setTimeout(async () => {
         // criterio fora de stoque
         if (trigger.fields &&
           trigger.fields.includes('quantity') &&
-          product.quantity > 0) {
+          trigger.body && trigger.body.quantity > 0) {
           // avisa que o produto chegou
           await productBackToStock({ appSdk, appData, admin, trigger, storeId })
         }

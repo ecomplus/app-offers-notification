@@ -18,7 +18,7 @@
     "@ecomplus/transactional-mails": "^1.11.7",
     "@ecomplus/utils": "^1.4.1",
     "@google-cloud/firestore": "^4.15.1",
-    "aws-sdk": "^2.1467.0",
+    "aws-sdk": "^2.1486.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "ejs": "^3.1.9",
@@ -27,7 +27,7 @@
     "firebase-admin": "^10.3.0",
     "firebase-functions": "^3.24.1",
     "json2csv": "^5.0.7",
-    "nodemailer": "^6.9.5"
+    "nodemailer": "^6.9.7"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
